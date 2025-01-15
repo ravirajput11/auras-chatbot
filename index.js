@@ -25,6 +25,7 @@ app.get("/api/auth/token", async (req, res) => {
       scope: process.env.AZURE_SCOPE ?? "",
     };
     const response = await axios.post(
+      // https://login.microsoftonline.com/406f6fb2-e087-4d29-9642-817873fddc4c/oauth2/v2.0/token
       `${process.env.AZURE_AUTHORITY}/${process.env.AZURE_TENANT_ID}/oauth2/v2.0/token`,
       new URLSearchParams(tokenRequest),
       {
@@ -57,9 +58,6 @@ app.post("/api/web-bff/auras-gpt-spa", async (req, res) => {
     console.error("Error exchanging code for token:", error);
     res.status(500).send("Internal Server Error");
   }
-});
-app.use("*", (req, res) => {
-  res.send("server is running");
 });
 
 app.listen(port, () => {
